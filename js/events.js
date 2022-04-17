@@ -148,7 +148,7 @@ Fluid.events = {
       return;
     }
     // eslint-disable-next-line no-console
-    console.log(`
+   /* console.log(`
 ------------------------------------------------
 |                                              |
 |     ________  __            _        __      |
@@ -163,5 +163,6 @@ Fluid.events = {
 |                                              |
 ------------------------------------------------
     `);
+    */
   }
 };

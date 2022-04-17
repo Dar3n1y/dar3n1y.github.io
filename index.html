@@ -16,12 +16,12 @@
   <meta name="author" content="Dar3n1y">
   <meta name="keywords" content="">
   
-    <meta name="description" content="自律给我自由。">
+    <meta name="description" content="网络安全,Web安全,漏洞复现">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Dar3n1y&#39;s Blog">
-<meta property="og:url" content="http://example.com/index.html">
+<meta property="og:url" content="https://dar3n1y.top/index.html">
 <meta property="og:site_name" content="Dar3n1y&#39;s Blog">
-<meta property="og:description" content="自律给我自由。">
+<meta property="og:description" content="网络安全,Web安全,漏洞复现">
 <meta property="og:locale" content="en_US">
 <meta property="article:author" content="Dar3n1y">
 <meta name="twitter:card" content="summary_large_image">
@@ -58,7 +58,7 @@
 
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
-    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":true,"scope":["home"]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+    var CONFIG = {"hostname":"dar3n1y.top","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":["home"]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
   </script>
   <script  src="/js/utils.js" ></script>
   <script  src="/js/color-schema.js" ></script>
@@ -216,15 +216,15 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2022/03/05/%E4%B8%80%E6%AC%A1%E6%89%93%E9%9D%B6%E8%BF%87%E7%A8%8B%E4%B8%ADKali%E9%87%8D%E5%90%AF%E6%97%A0%E5%9B%BE%E5%BD%A2GUI%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/" target="_self">
-          一次打靶过程中Kali重启无图形GUI解决方法
+        <a href="/2022/03/05/Kali%E9%87%8D%E5%90%AF%E6%97%A0%E5%9B%BE%E5%BD%A2GUI%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/" target="_self">
+          Kali重启无图形GUI解决方法
         </a>
       </h1>
 
-      <a class="index-excerpt" href="/2022/03/05/%E4%B8%80%E6%AC%A1%E6%89%93%E9%9D%B6%E8%BF%87%E7%A8%8B%E4%B8%ADKali%E9%87%8D%E5%90%AF%E6%97%A0%E5%9B%BE%E5%BD%A2GUI%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/" target="_self">
+      <a class="index-excerpt" href="/2022/03/05/Kali%E9%87%8D%E5%90%AF%E6%97%A0%E5%9B%BE%E5%BD%A2GUI%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/" target="_self">
         <div>
           
-          0x00 前言​		打靶机的过程突然GUI就没了(M1 PD) 0x01 解决方法​		言归正传 ​		用自己的账户密码登录cli，重新安装图形化界面（我也不知道为什么就要重新安装了，毕竟我前面没卸载啊。。。 依次输入： 123$ apt update$ apt install x-window-system-core$ apt install gnome-core  注：如果有换了apt源的话，
+          一次打靶机的过程中重启PD，打开Kali没有GUI界面（M1）
         </div>
       </a>
 
@@ -287,7 +287,7 @@
       <a class="index-excerpt" href="/2022/03/05/HackTheBox-Meta/" target="_self">
         <div>
           
-          Machines（Meta） 信息搜集使用masscan扫描全端口 1sudo masscan -p1-65535 10.10.11.140 --rate&#x3D;1000   使用nmap扫描常用端口 1nmap -A -sV 10.10.11.140    从扫描结果看出开放了22和80端口  访问80端口，发现重定向一个网址名为artcorp.htb的网址，修改hosts文件绑定域名，可见是一个简单
+          HackThebox是国外的一款靶场渗透在线平台，本文详细记录了Meta靶场渗透测试的过程，难度较难，其中包含了CVE-2021-22204-exiftool、ImageMgick命令注入、提权等内容。
         </div>
       </a>
 
@@ -328,7 +328,7 @@
             
               <a href="/tags/HackTheBox/">#HackTheBox</a>
             
-              <a href="/tags/%E9%9D%B6%E6%9C%BA/">#靶机</a>
+              <a href="/tags/%E9%9D%B6%E6%9C%BA%E7%B3%BB%E5%88%97/">#靶机系列</a>
             
           </div>
         
@@ -342,15 +342,15 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2022/01/25/Hexo-Github-Pages%E9%83%A8%E7%BD%B2%E5%8D%9A%E5%AE%A2%E7%B3%BB%E7%BB%9F/" target="_self">
-          Hexo+Github Pages部署博客系统
+        <a href="/2022/01/25/GitHub%20Pages%20+%20Hexo%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/" target="_self">
+          GitHub Pages + Hexo搭建个人博客
         </a>
       </h1>
 
-      <a class="index-excerpt" href="/2022/01/25/Hexo-Github-Pages%E9%83%A8%E7%BD%B2%E5%8D%9A%E5%AE%A2%E7%B3%BB%E7%BB%9F/" target="_self">
+      <a class="index-excerpt" href="/2022/01/25/GitHub%20Pages%20+%20Hexo%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/" target="_self">
         <div>
           
-          
+          本文介绍如何使用GitHub Pages + Hexo搭建个人博客网站，完全免费。 Hexo是一款基于Node.js的静态博客框架，依赖少易于安装使用，可以方便的生成静态网页托管在GitHub和Heroku上，是搭建博客的首选框架。
         </div>
       </a>
 

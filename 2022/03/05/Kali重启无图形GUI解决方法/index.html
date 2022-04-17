@@ -16,20 +16,24 @@
   <meta name="author" content="Dar3n1y">
   <meta name="keywords" content="">
   
-    <meta name="description" content="自律给我自由。">
+    <meta name="description" content="一次打靶机的过程中重启PD，打开Kali没有GUI界面（M1）">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hexo+Github Pages部署博客系统">
-<meta property="og:url" content="http://example.com/2022/01/25/Hexo-Github-Pages%E9%83%A8%E7%BD%B2%E5%8D%9A%E5%AE%A2%E7%B3%BB%E7%BB%9F/index.html">
+<meta property="og:title" content="Kali重启无图形GUI解决方法">
+<meta property="og:url" content="https://dar3n1y.top/2022/03/05/Kali%E9%87%8D%E5%90%AF%E6%97%A0%E5%9B%BE%E5%BD%A2GUI%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/index.html">
 <meta property="og:site_name" content="Dar3n1y&#39;s Blog">
-<meta property="og:description" content="自律给我自由。">
+<meta property="og:description" content="一次打靶机的过程中重启PD，打开Kali没有GUI界面（M1）">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2022-01-25T06:31:57.000Z">
-<meta property="article:modified_time" content="2022-01-25T06:32:39.829Z">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Dar3n1y/cdn-images@master/blog-images/2022/03/06/20220306-0016-6.png">
+<meta property="article:published_time" content="2022-03-05T14:14:39.181Z">
+<meta property="article:modified_time" content="2022-04-17T16:08:21.021Z">
 <meta property="article:author" content="Dar3n1y">
+<meta property="article:tag" content="解决办法">
+<meta property="article:tag" content="杂项">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/Dar3n1y/cdn-images@master/blog-images/2022/03/06/20220306-0016-6.png">
   
   
-  <title>Hexo+Github Pages部署博客系统 - Dar3n1y&#39;s Blog</title>
+  <title>Kali重启无图形GUI解决方法 - Dar3n1y&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -66,7 +70,7 @@
 
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
-    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":true,"scope":["home"]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+    var CONFIG = {"hostname":"dar3n1y.top","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":["home"]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
   </script>
   <script  src="/js/utils.js" ></script>
   <script  src="/js/color-schema.js" ></script>
@@ -81,7 +85,7 @@
   <header>
     
 
-<div class="header-inner" style="height: 70vh;">
+<div class="header-inner" style="height: 45vh;">
   <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
     <a class="navbar-brand" href="/">
@@ -186,7 +190,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle">Hexo+Github Pages部署博客系统</span>
+            <span id="subtitle">Kali重启无图形GUI解决方法</span>
           
         </div>
 
@@ -197,8 +201,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2022-01-25 14:31" pubdate>
-          January 25, 2022 pm
+        <time datetime="2022-03-05 22:14" pubdate>
+          March 5, 2022 pm
         </time>
       </span>
     
@@ -209,7 +213,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          0 words
+          208 words
         
       </span>
     
@@ -220,7 +224,7 @@
         
         
         
-          1 mins
+          2 mins
         
       </span>
     
@@ -266,17 +270,58 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">Hexo+Github Pages部署博客系统</h1>
+            <h1 style="display: none">Kali重启无图形GUI解决方法</h1>
             
             <div class="markdown-body">
               
-              
+              <blockquote>
+<p>一次打靶机的过程中重启PD，打开Kali没有GUI界面（M1）</p>
+</blockquote>
+<span id="more"></span>
+
+<h3 id="0x01-解决方法"><a href="#0x01-解决方法" class="headerlink" title="0x01 解决方法"></a>0x01 解决方法</h3><p>​		用自己的账户密码登录cli，重新安装图形化界面（我也不知道为什么就要重新安装了，毕竟我前面没卸载啊。。。</p>
+<p>依次输入：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">$ </span><span class="language-bash">apt update</span><br><span class="hljs-meta prompt_">$ </span><span class="language-bash">apt install x-window-system-core</span><br><span class="hljs-meta prompt_">$ </span><span class="language-bash">apt install gnome-core</span><br></code></pre></td></tr></table></figure>
+
+<p>注：<strong>如果有换了apt源的话，可能会安装不成功，把你备份的官方源还原下就可以了</strong></p>
+<h3 id="0x02-成功恢复"><a href="#0x02-成功恢复" class="headerlink" title="0x02 成功恢复"></a>0x02 成功恢复</h3><p><img src="https://cdn.jsdelivr.net/gh/Dar3n1y/cdn-images@master/blog-images/2022/03/06/20220306-0016-6.png" srcset="/img/loading.gif" lazyload alt="image-20220305202031959"></p>
+
               
             </div>
             <hr/>
             <div>
               <div class="post-metas my-3">
   
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E7%96%91%E9%9A%BE%E6%9D%82%E7%97%87/" class="category-chain-item">疑难杂症</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/">#解决办法</a>
+      
+        <a href="/tags/%E6%9D%82%E9%A1%B9/">#杂项</a>
+      
+    </div>
   
 </div>
 
@@ -286,8 +331,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>Hexo+Github Pages部署博客系统</div>
-      <div>http://example.com/2022/01/25/Hexo-Github-Pages部署博客系统/</div>
+      <div>Kali重启无图形GUI解决方法</div>
+      <div>https://dar3n1y.top/2022/03/05/Kali重启无图形GUI解决方法/</div>
     </div>
     <div class="license-meta">
       
@@ -299,7 +344,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>Posted on</div>
-          <div>January 25, 2022</div>
+          <div>March 5, 2022</div>
         </div>
       
       
@@ -329,15 +374,15 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2022/03/05/HackTheBox-Meta/" title="HackTheBox-Meta">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">HackTheBox-Meta</span>
-                        <span class="visible-mobile">Previous</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
+                    
+                      <a href="/2022/03/05/HackTheBox-Meta/" title="HackTheBox-Meta">
+                        <span class="hidden-mobile">HackTheBox-Meta</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
                     
                   </article>
                 </div>

