@@ -16,24 +16,27 @@
   <meta name="author" content="Dar3n1y">
   <meta name="keywords" content="">
   
-    <meta name="description" content="一次打靶机的过程中重启PD，打开Kali没有GUI界面（M1）">
+    <meta name="description" content="宽字节注入主要是由于MySQL数据库与客户端（这里以PHP为例）转义编码格式不同，导致SQL在数据库进行编码转换时可能出现编码问题引起的。 常见单字节编码有ASCII、latin1，常见宽字节（多字节）编码有GBK、UTF-8。 常见转义函数与配置：addslashes()、 mysql_real_escape_string() 、mysql_escape_string()（本函数和 mysql_">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Kali重启无图形GUI解决方法">
-<meta property="og:url" content="https://dar3n1y.top/2022/03/05/Kali%E9%87%8D%E5%90%AF%E6%97%A0%E5%9B%BE%E5%BD%A2GUI%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/index.html">
+<meta property="og:title" content="宽字节注入">
+<meta property="og:url" content="https://dar3n1y.top/20220424/48aea146/index.html">
 <meta property="og:site_name" content="Dar3n1y&#39;s Blog">
-<meta property="og:description" content="一次打靶机的过程中重启PD，打开Kali没有GUI界面（M1）">
+<meta property="og:description" content="宽字节注入主要是由于MySQL数据库与客户端（这里以PHP为例）转义编码格式不同，导致SQL在数据库进行编码转换时可能出现编码问题引起的。 常见单字节编码有ASCII、latin1，常见宽字节（多字节）编码有GBK、UTF-8。 常见转义函数与配置：addslashes()、 mysql_real_escape_string() 、mysql_escape_string()（本函数和 mysql_">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Dar3n1y/cdn-images@master/blog-images/2022/03/06/20220306-0016-6.png">
-<meta property="article:published_time" content="2022-03-05T14:14:39.181Z">
-<meta property="article:modified_time" content="2022-04-17T16:08:21.021Z">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Dar3n1y/cdn-images@latest/blog-images/2022/04/26/20220426-1202.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Dar3n1y/cdn-images@latest/blog-images/2022/04/26/20220426-1202-1.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Dar3n1y/cdn-images@latest/blog-images/2022/04/26/20220426-1205.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Dar3n1y/cdn-images@latest/blog-images/2022/04/26/20220426-1206.png">
+<meta property="article:published_time" content="2022-04-24T07:35:27.529Z">
+<meta property="article:modified_time" content="2022-04-26T06:30:50.027Z">
 <meta property="article:author" content="Dar3n1y">
-<meta property="article:tag" content="解决办法">
-<meta property="article:tag" content="杂项">
+<meta property="article:tag" content="Sql注入">
+<meta property="article:tag" content="漏洞原理">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/Dar3n1y/cdn-images@master/blog-images/2022/03/06/20220306-0016-6.png">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/Dar3n1y/cdn-images@latest/blog-images/2022/04/26/20220426-1202.png">
   
   
-  <title>Kali重启无图形GUI解决方法 - Dar3n1y&#39;s Blog</title>
+  <title>宽字节注入 - Dar3n1y&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -190,7 +193,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle">Kali重启无图形GUI解决方法</span>
+            <span id="subtitle">宽字节注入</span>
           
         </div>
 
@@ -201,8 +204,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2022-03-05 22:14" pubdate>
-          March 5, 2022 pm
+        <time datetime="2022-04-24 15:35" pubdate>
+          April 24, 2022 pm
         </time>
       </span>
     
@@ -213,7 +216,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          208 words
+          3.5k words
         
       </span>
     
@@ -224,7 +227,7 @@
         
         
         
-          2 mins
+          29 mins
         
       </span>
     
@@ -270,21 +273,52 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">Kali重启无图形GUI解决方法</h1>
+            <h1 style="display: none">宽字节注入</h1>
             
             <div class="markdown-body">
               
-              <blockquote>
-<p>一次打靶机的过程中重启PD，打开Kali没有GUI界面（M1）</p>
-</blockquote>
-<span id="more"></span>
+              <p>宽字节注入主要是由于MySQL数据库与客户端（这里以PHP为例）转义编码格式不同，导致SQL在数据库进行编码转换时可能出现编码问题引起的。</p>
+<p>常见单字节编码有ASCII、latin1，常见宽字节（多字节）编码有GBK、UTF-8。</p>
+<p>常见转义函数与配置：<a target="_blank" rel="noopener" href="https://www.php.net/manual/zh/function.addslashes.php">addslashes()</a>、 <a target="_blank" rel="noopener" href="https://www.php.net/manual/zh/function.mysql-real-escape-string.php">mysql_real_escape_string()</a> 、<a target="_blank" rel="noopener" href="https://www.php.net/manual/zh/function.mysql-escape-string.php">mysql_escape_string()</a>（本函数和 mysql_real_escape_string 完全一样，除了 mysql_real_escape_string接受的是一个连接句柄并根据当前字符集转移字符串之外。mysql_escape_string() 并不接受连接参数，也不管当前字符集设定。）、php.ini中 <a target="_blank" rel="noopener" href="https://www.php.net/manual/zh/info.configuration.php#ini.magic-quotes-gpc">magic_quotes_gpc</a> 指令（<code>在php5.4已上已给删除</code>，并且需要说明特别说明一点，GPC无法过滤<code>$_SERVER</code>提交的参数）。</p>
+<!--  more -->
 
-<h3 id="0x01-解决方法"><a href="#0x01-解决方法" class="headerlink" title="0x01 解决方法"></a>0x01 解决方法</h3><p>​		用自己的账户密码登录cli，重新安装图形化界面（我也不知道为什么就要重新安装了，毕竟我前面没卸载啊。。。</p>
-<p>依次输入：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">$ </span><span class="language-bash">apt update</span><br><span class="hljs-meta prompt_">$ </span><span class="language-bash">apt install x-window-system-core</span><br><span class="hljs-meta prompt_">$ </span><span class="language-bash">apt install gnome-core</span><br></code></pre></td></tr></table></figure>
+<h3 id="0x01-MySQL交互过程"><a href="#0x01-MySQL交互过程" class="headerlink" title="0x01 MySQL交互过程"></a>0x01 MySQL交互过程</h3><p>在MySQL数据库中，各字符集查询<code>show variables like &quot;%character%&quot;;</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Dar3n1y/cdn-images@latest/blog-images/2022/04/26/20220426-1202.png" srcset="/img/loading.gif" lazyload></p>
+<p>简单的交互过程：</p>
+<ol>
+<li><p>SQL以客户端编码格式发送到数据库连接层。</p>
+</li>
+<li><p>将收到的SQL转为连接层字符集（通过系统变量character_set_client 对 SQL 语句进行解码后，然后使用系统变量character_set_connection对解码后的十六进制进行编码）。</p>
+</li>
+<li><p>内部操作前，将数据按照（字段 CHARACTER SET 设定值&gt;对应数据表默认编码&gt;对应数据库默认编码&gt;character_set_server）顺序转化成内部操作字符集进行解码。</p>
+</li>
+<li><p>执行SQL后，通过character_set_results 编码进行输出。</p>
+</li>
+</ol>
+<h3 id="0x02-注入原理"><a href="#0x02-注入原理" class="headerlink" title="0x02 注入原理"></a>0x02 注入原理</h3><p>宽字节注入通常利用原理指的是 MySQL 数据库在使用宽字节（GBK）编码（或单独设置set names “gbk”、SET character_set_client &#x3D;gbk）时，会认为两个字节是一个汉字（首字节ascii码要大于128（比如%df），才到汉字的范围），而且当我们输入单引号时，代码会调用转义函数，将单引号变为\&#39;，其中\的十六进制URL编码是%5c，GBK编码下的MySQL会认为%df%5c是一个宽字节，也就是’運’，从而使单引号闭合（逃逸），进行注入攻击。</p>
+<p>其次，MySQL数据库在使用UTF-8宽字节编码时，使用函数转义，并使用iconv函数进行编码转换情况下也可能造成宽字节注入，下面实例二会简单介绍。</p>
+<h3 id="0x03-注入实例"><a href="#0x03-注入实例" class="headerlink" title="0x03 注入实例"></a>0x03 注入实例</h3><h4 id="实例一"><a href="#实例一" class="headerlink" title="实例一"></a>实例一</h4><p>这里通过Sqli-labs中的Less-33来简单实践下，直接代码分析，比较简单。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">check_addslashes</span>(<span class="hljs-params"><span class="hljs-variable">$string</span></span>)</span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-variable">$string</span>= <span class="hljs-title function_ invoke__">addslashes</span>(<span class="hljs-variable">$string</span>);    <br>    <span class="hljs-keyword">return</span> <span class="hljs-variable">$string</span>;<br>&#125;<br><br><span class="hljs-comment">// take the variables </span><br><span class="hljs-keyword">if</span>(<span class="hljs-keyword">isset</span>(<span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;id&#x27;</span>]))<br>&#123;<br><span class="hljs-variable">$id</span>=<span class="hljs-title function_ invoke__">check_addslashes</span>(<span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;id&#x27;</span>]);<br><span class="hljs-comment">//echo &quot;The filtered request is :&quot; .$id . &quot;&lt;br&gt;&quot;;</span><br><br><span class="hljs-comment">//logging the connection parameters to a file for analysis.</span><br><span class="hljs-variable">$fp</span>=<span class="hljs-title function_ invoke__">fopen</span>(<span class="hljs-string">&#x27;result.txt&#x27;</span>,<span class="hljs-string">&#x27;a&#x27;</span>);<br><span class="hljs-title function_ invoke__">fwrite</span>(<span class="hljs-variable">$fp</span>,<span class="hljs-string">&#x27;ID:&#x27;</span>.<span class="hljs-variable">$id</span>.<span class="hljs-string">&quot;\n&quot;</span>);<br><span class="hljs-title function_ invoke__">fclose</span>(<span class="hljs-variable">$fp</span>);<br><br><span class="hljs-comment">// connectivity </span><br><br><span class="hljs-title function_ invoke__">mysql_query</span>(<span class="hljs-string">&quot;SET NAMES gbk&quot;</span>);<span class="hljs-comment">//设置mysql编码格式为gbk</span><br><span class="hljs-variable">$sql</span>=<span class="hljs-string">&quot;SELECT * FROM users WHERE id=&#x27;<span class="hljs-subst">$id</span>&#x27; LIMIT 0,1&quot;</span>;<br><span class="hljs-variable">$result</span>=<span class="hljs-title function_ invoke__">mysql_query</span>(<span class="hljs-variable">$sql</span>);<br><span class="hljs-variable">$row</span> = <span class="hljs-title function_ invoke__">mysql_fetch_array</span>(<span class="hljs-variable">$result</span>);<br></code></pre></td></tr></table></figure>
 
-<p>注：<strong>如果有换了apt源的话，可能会安装不成功，把你备份的官方源还原下就可以了</strong></p>
-<h3 id="0x02-成功恢复"><a href="#0x02-成功恢复" class="headerlink" title="0x02 成功恢复"></a>0x02 成功恢复</h3><p><img src="https://cdn.jsdelivr.net/gh/Dar3n1y/cdn-images@master/blog-images/2022/03/06/20220306-0016-6.png" srcset="/img/loading.gif" lazyload alt="image-20220305202031959"></p>
+<p>当数据库编码设置为gbk时，id参数提交<code>1%df&#39;</code>，通过url编码为<code>1%df%27</code>，经过函数check_addslashes()对特殊字符%27进行转义为<code>1%df%5c%27</code>，然后设置MySQL编码为gbk，经过数据库内部操作转码后，最终以<code>1運&#39;</code>查询。</p>
+<p>数据变化：<code>%df%27--&gt;(\转义函数处理)--&gt;%df%5c%27--&gt;(GBK编码)--&gt;運&#39;</code></p>
+<p>一个在线转码地址：<a target="_blank" rel="noopener" href="https://www.atool99.com/urlencode.php">https://www.atool99.com/urlencode.php</a></p>
+<p>解释下页面为什么<code>運字符</code>是乱码<code>(?\&#39;)</code>，是因为HTML页面显示的UTF-8编码，把页面改成charset&#x3D;gbk就好。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Dar3n1y/cdn-images@latest/blog-images/2022/04/26/20220426-1202-1.png" srcset="/img/loading.gif" lazyload></p>
+<h4 id="实例二"><a href="#实例二" class="headerlink" title="实例二"></a>实例二</h4><p>当数据库编码为uft-8时，在使用iconv()函数处理数据前先进行addslashes()转义也会引起宽字节注入，当然和GBK编码还有着千丝万缕 的关系。</p>
+<p>iconv()函数一般用来为了避免乱码，会将一些用户提交的GBK字符使用该函数先转为UTF-8，然后再拼接入SQL语句。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">check_addslashes</span>(<span class="hljs-params"><span class="hljs-variable">$string</span></span>)</span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-variable">$string</span>= <span class="hljs-title function_ invoke__">addslashes</span>(<span class="hljs-variable">$string</span>);    <br>    <span class="hljs-keyword">return</span> <span class="hljs-variable">$string</span>;<br>&#125;<br><br><span class="hljs-comment">// take the variables </span><br><span class="hljs-keyword">if</span>(<span class="hljs-keyword">isset</span>(<span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;id&#x27;</span>]))<span class="hljs-comment">//id = %e5%5c%27</span><br>&#123;<br><span class="hljs-variable">$id</span>=<span class="hljs-title function_ invoke__">check_addslashes</span>(<span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;id&#x27;</span>]); <span class="hljs-comment">// id = %e5%5c%5c%5c%27</span><br><span class="hljs-variable">$id</span> = <span class="hljs-title function_ invoke__">iconv</span>(<span class="hljs-string">&#x27;GBK&#x27;</span>,<span class="hljs-string">&#x27;UTF-8&#x27;</span>,<span class="hljs-variable">$id</span>); <span class="hljs-comment">//把参数中的gbk字符转换成uft-8 id = %e9%8c%a6%5c%5c%27</span><br><span class="hljs-keyword">echo</span> <span class="hljs-string">&quot;The filtered request is :&quot;</span> .<span class="hljs-variable">$id</span> . <span class="hljs-string">&quot;&lt;br&gt;&quot;</span>;<br><br><span class="hljs-comment">//logging the connection parameters to a file for analysis.</span><br><span class="hljs-variable">$fp</span>=<span class="hljs-title function_ invoke__">fopen</span>(<span class="hljs-string">&#x27;result.txt&#x27;</span>,<span class="hljs-string">&#x27;a&#x27;</span>);<br><span class="hljs-title function_ invoke__">fwrite</span>(<span class="hljs-variable">$fp</span>,<span class="hljs-string">&#x27;ID:&#x27;</span>.<span class="hljs-variable">$id</span>.<span class="hljs-string">&quot;\n&quot;</span>);<br><span class="hljs-title function_ invoke__">fclose</span>(<span class="hljs-variable">$fp</span>);<br><br><span class="hljs-comment">// connectivity </span><br><br><span class="hljs-comment">//mysql_query(&quot;SET NAMES gbk&quot;);</span><br><span class="hljs-title function_ invoke__">mysql_query</span>(<span class="hljs-string">&quot;SET NAMES UTF-8&quot;</span>);<span class="hljs-comment">//设置成utf-8</span><br><span class="hljs-variable">$sql</span>=<span class="hljs-string">&quot;SELECT * FROM users WHERE id=&#x27;<span class="hljs-subst">$id</span>&#x27; LIMIT 0,1&quot;</span>;<br><span class="hljs-comment">//echo $sql;</span><br><span class="hljs-variable">$result</span>=<span class="hljs-title function_ invoke__">mysql_query</span>(<span class="hljs-variable">$sql</span>);<br><span class="hljs-variable">$row</span> = <span class="hljs-title function_ invoke__">mysql_fetch_array</span>(<span class="hljs-variable">$result</span>);<br></code></pre></td></tr></table></figure>
+
+<p>数据变化：<code>%e5%5c%27----&gt;(addslashes)----&gt;%e5%5c%5c%5c%27----(iconv)----&gt;%e9%8c%a6%5c%5c%27</code></p>
+<p>最后可以看见%e9%8c%a6变为錦，%5c被%5c转义，而%27被单出来了。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Dar3n1y/cdn-images@latest/blog-images/2022/04/26/20220426-1205.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="0x04-修复建议"><a href="#0x04-修复建议" class="headerlink" title="0x04 修复建议"></a>0x04 修复建议</h3><p>一、同时使用UTF-8编码，并且不使用iconv()函数。</p>
+<p>二、使用mysql_set_charset(“GBK”);指定字符集&amp;&amp;使用mysql_real_escape_string()函数进行转义。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Dar3n1y/cdn-images@latest/blog-images/2022/04/26/20220426-1206.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="0x05-参考链接"><a href="#0x05-参考链接" class="headerlink" title="0x05 参考链接"></a>0x05 参考链接</h3><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_45441315/article/details/119483135">https://blog.csdn.net/weixin_45441315/article/details/119483135</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/cscshi/p/15705038.html">https://www.cnblogs.com/cscshi/p/15705038.html</a></p>
+<p><a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/1719">https://xz.aliyun.com/t/1719</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.ruanyifeng.com/blog/2007/10/ascii_unicode_and_utf-8.html">https://www.ruanyifeng.com/blog/2007/10/ascii_unicode_and_utf-8.html</a></p>
 
               
             </div>
@@ -302,7 +336,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/%E7%96%91%E9%9A%BE%E6%9D%82%E7%97%87/" class="category-chain-item">疑难杂症</a>
+  <a href="/categories/Web/" class="category-chain-item">Web</a>
   
   
 
@@ -317,9 +351,9 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/">#解决办法</a>
+        <a href="/tags/Sql%E6%B3%A8%E5%85%A5/">#Sql注入</a>
       
-        <a href="/tags/%E6%9D%82%E9%A1%B9/">#杂项</a>
+        <a href="/tags/%E6%BC%8F%E6%B4%9E%E5%8E%9F%E7%90%86/">#漏洞原理</a>
       
     </div>
   
@@ -331,8 +365,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>Kali重启无图形GUI解决方法</div>
-      <div>https://dar3n1y.top/2022/03/05/Kali重启无图形GUI解决方法/</div>
+      <div>宽字节注入</div>
+      <div>https://dar3n1y.top/20220424/48aea146/</div>
     </div>
     <div class="license-meta">
       
@@ -344,7 +378,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>Posted on</div>
-          <div>March 5, 2022</div>
+          <div>April 24, 2022</div>
         </div>
       
       
@@ -374,18 +408,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2022/04/24/%E5%AE%BD%E5%AD%97%E8%8A%82%E6%B3%A8%E5%85%A5/" title="宽字节注入">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">宽字节注入</span>
-                        <span class="visible-mobile">Previous</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/03/05/HackTheBox-Meta/" title="HackTheBox-Meta">
-                        <span class="hidden-mobile">HackTheBox-Meta</span>
+                      <a href="/20220305/290c3e26/" title="Kali重启无图形GUI解决方法">
+                        <span class="hidden-mobile">Kali重启无图形GUI解决方法</span>
                         <span class="visible-mobile">Next</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
