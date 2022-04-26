@@ -16,19 +16,19 @@
   <meta name="author" content="Dar3n1y">
   <meta name="keywords" content="">
   
-    <meta name="description" content="宽字节注入主要是由于数据库与客户端（PHP）转义编码格式不同，导致SQL在数据库进行编码转换时可能出现编码问题引起的。 常见单字节编码有ASCII、latin1，常见宽字节（多字节）编码有GBK、UTF-8。 常见转义函数与配置：addslashes()、 mysql_real_escape_string() 、mysql_escape_string()（本函数和 mysql_real_escap">
+    <meta name="description" content="宽字节注入主要是由于MySQL数据库与客户端（这里以PHP为例）转义编码格式不同，导致SQL在数据库进行编码转换时可能出现编码问题引起的。 常见单字节编码有ASCII、latin1，常见宽字节（多字节）编码有GBK、UTF-8。 常见转义函数与配置：addslashes()、 mysql_real_escape_string() 、mysql_escape_string()（本函数和 mysql_">
 <meta property="og:type" content="article">
 <meta property="og:title" content="宽字节注入">
 <meta property="og:url" content="https://dar3n1y.top/2022/04/24/%E5%AE%BD%E5%AD%97%E8%8A%82%E6%B3%A8%E5%85%A5/index.html">
 <meta property="og:site_name" content="Dar3n1y&#39;s Blog">
-<meta property="og:description" content="宽字节注入主要是由于数据库与客户端（PHP）转义编码格式不同，导致SQL在数据库进行编码转换时可能出现编码问题引起的。 常见单字节编码有ASCII、latin1，常见宽字节（多字节）编码有GBK、UTF-8。 常见转义函数与配置：addslashes()、 mysql_real_escape_string() 、mysql_escape_string()（本函数和 mysql_real_escap">
+<meta property="og:description" content="宽字节注入主要是由于MySQL数据库与客户端（这里以PHP为例）转义编码格式不同，导致SQL在数据库进行编码转换时可能出现编码问题引起的。 常见单字节编码有ASCII、latin1，常见宽字节（多字节）编码有GBK、UTF-8。 常见转义函数与配置：addslashes()、 mysql_real_escape_string() 、mysql_escape_string()（本函数和 mysql_">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/Dar3n1y/cdn-images@latest/blog-images/2022/04/26/20220426-1202.png">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/Dar3n1y/cdn-images@latest/blog-images/2022/04/26/20220426-1202-1.png">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/Dar3n1y/cdn-images@latest/blog-images/2022/04/26/20220426-1205.png">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/Dar3n1y/cdn-images@latest/blog-images/2022/04/26/20220426-1206.png">
 <meta property="article:published_time" content="2022-04-24T07:35:27.529Z">
-<meta property="article:modified_time" content="2022-04-26T04:10:16.650Z">
+<meta property="article:modified_time" content="2022-04-26T04:25:50.488Z">
 <meta property="article:author" content="Dar3n1y">
 <meta property="article:tag" content="Sql注入">
 <meta property="article:tag" content="漏洞原理">
@@ -277,7 +277,7 @@
             
             <div class="markdown-body">
               
-              <p>宽字节注入主要是由于数据库与客户端（PHP）转义编码格式不同，导致SQL在数据库进行编码转换时可能出现编码问题引起的。</p>
+              <p>宽字节注入主要是由于MySQL数据库与客户端（这里以PHP为例）转义编码格式不同，导致SQL在数据库进行编码转换时可能出现编码问题引起的。</p>
 <p>常见单字节编码有ASCII、latin1，常见宽字节（多字节）编码有GBK、UTF-8。</p>
 <p>常见转义函数与配置：<a target="_blank" rel="noopener" href="https://www.php.net/manual/zh/function.addslashes.php">addslashes()</a>、 <a target="_blank" rel="noopener" href="https://www.php.net/manual/zh/function.mysql-real-escape-string.php">mysql_real_escape_string()</a> 、<a target="_blank" rel="noopener" href="https://www.php.net/manual/zh/function.mysql-escape-string.php">mysql_escape_string()</a>（本函数和 mysql_real_escape_string 完全一样，除了 mysql_real_escape_string接受的是一个连接句柄并根据当前字符集转移字符串之外。mysql_escape_string() 并不接受连接参数，也不管当前字符集设定。）、php.ini中 <a target="_blank" rel="noopener" href="https://www.php.net/manual/zh/info.configuration.php#ini.magic-quotes-gpc">magic_quotes_gpc</a> 指令（<code>在php5.4已上已给删除</code>，并且需要说明特别说明一点，GPC无法过滤<code>$_SERVER</code>提交的参数）。</p>
 <!--  more -->
